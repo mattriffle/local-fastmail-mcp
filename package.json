@@ -1,6 +1,6 @@
 {
   "name": "local-fastmail-mcp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A locally-hosted MCP server that connects your AI assistant to Fastmail via the JMAP API.",
   "main": "index.js",
   "scripts": {

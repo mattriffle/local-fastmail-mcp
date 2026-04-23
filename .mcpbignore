@@ -1,0 +1,17 @@
+# Source TypeScript (compiled output is in dist/)
+src/
+scripts/
+
+# Development/config files
+.git/
+.github/
+.env
+.env.*
+!.env.example
+tsconfig.json
+vitest.config.*
+
+# Build artifacts and other non-runtime files
+package-lock.json
+*.md
+*.mcpb

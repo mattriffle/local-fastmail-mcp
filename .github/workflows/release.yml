@@ -1,0 +1,48 @@
+name: Build and Release MCPB
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+
+      - name: Install all dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      # Reinstall with production-only deps so the bundle stays small
+      - name: Prune to production dependencies
+        run: npm prune --omit=dev
+
+      - name: Sync manifest version
+        run: node scripts/sync-version.js
+
+      - name: Pack MCP Bundle
+        run: npx -y @anthropic-ai/mcpb pack .
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: "*.mcpb"
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

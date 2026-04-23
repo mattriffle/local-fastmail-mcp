@@ -1,0 +1,44 @@
+{
+  "manifest_version": "0.3",
+  "name": "local-fastmail-mcp",
+  "version": "1.0.1",
+  "display_name": "Local Fastmail MCP",
+  "description": "A locally-hosted MCP server that connects your AI assistant to Fastmail via the JMAP API.",
+  "author": {
+    "name": "Matt Riffle"
+  },
+  "server": {
+    "type": "node",
+    "entry_point": "dist/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": [
+        "${__dirname}/dist/index.js"
+      ],
+      "env": {
+        "FASTMAIL_EMAIL": "${user_config.fastmail_email}",
+        "FASTMAIL_API_TOKEN": "${user_config.fastmail_api_token}"
+      }
+    }
+  },
+  "user_config": {
+    "fastmail_email": {
+      "type": "string",
+      "title": "Fastmail Email",
+      "description": "Your Fastmail email address (e.g. you@fastmail.com)",
+      "required": true
+    },
+    "fastmail_api_token": {
+      "type": "string",
+      "title": "Fastmail API Token",
+      "description": "Your Fastmail API token. Create one at Settings → Privacy & Security → Connected apps & API tokens.",
+      "sensitive": true,
+      "required": true
+    }
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mattriffle/local-fastmail-mcp"
+  }
+}
